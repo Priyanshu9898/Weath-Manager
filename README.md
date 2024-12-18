@@ -24,7 +24,7 @@
 [![Vercel](https://vercelbadge.vercel.app/api/Priyanshu9898/Weath-Manager)](https://vercel.com)
 
 
-Tech Stack
+# Tech Stack
 - Nextjs
 - Nodejs
 - TypeScript
@@ -32,3 +32,12 @@ Tech Stack
 - Shadcn.ui
 - ESLint
   
+## Contributor:
+ <table>
+  <tr>
+    <td align="center"><a href="https://github.com/Priyanshu9898"><img src="https://avatars.githubusercontent.com/Priyanshu9898" width="100px;" alt=""/><br /><b>Priyanshu Malaviya</b></a></td>
+  </tr>
+</table>
+
+# 📞 Support
+For any support, email me at priyanshumalaviya9@gmail.com 
