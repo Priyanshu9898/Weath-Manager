@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Inter } from "next/font/google";
+import { ClerkProvider } from "@clerk/nextjs";
+import Navbar from "@/components/Navbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,8 +17,23 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${inter.className}`}>{children}</body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body className={`${inter.className}`}>
+          <main className="container min-h-screen">
+            <Navbar />
+            <div className="mt-20">{children}</div>
+          </main>
+
+          {/* {"Footer is here"} */}
+          <div className="footer section mx-auto bg-gray-600">
+            <footer className="py-4 text-center font-bold text-blue-50">
+              <p>© 2025 Wealth Manager </p>
+              <p>Made with 💗 by Priyanshu Malaviya </p>
+            </footer>
+          </div>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
