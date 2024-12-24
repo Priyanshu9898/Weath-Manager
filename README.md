@@ -33,7 +33,9 @@
 - [![shadcn/ui](https://img.shields.io/badge/shadcn.ui-1F2937?style=for-the-badge&logo=vercel&logoColor=white)](https://ui.shadcn.com/)
 - [![ESLint](https://img.shields.io/badge/ESLint-4B32C3?style=for-the-badge&logo=eslint&logoColor=white)](https://eslint.org/)
 
-  
+## Database Schema
+![image](https://github.com/user-attachments/assets/3cba66ae-5f73-4139-ba3a-6b87a6d658dc)
+
 ## Contributor:
  <table>
   <tr>
