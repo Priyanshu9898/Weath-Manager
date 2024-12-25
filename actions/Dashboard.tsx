@@ -3,7 +3,8 @@
 // import { DB } from "@/lib/prisma";
 // import { auth } from "@clerk/nextjs/server";
 
-// export async function createAccount(data) {
+// // eslint-disable-next-line @typescript-eslint/no-explicit-any
+// export async function createAccount(data: any) {
 //   try {
 //     const { userId } = await auth();
 
