@@ -3,8 +3,13 @@ import { SignedIn, SignInButton, SignedOut, UserButton } from "@clerk/nextjs";
 import { Button } from "./ui/button";
 import Link from "next/link";
 import { LayoutDashboard, PenBox } from "lucide-react";
+import { checkUser } from "@/lib/checkUser";
 
-const Navbar = () => {
+const Navbar = async () => {
+  const user = await checkUser();
+
+  console.log(user);
+
   return (
     <>
       <div className="container mx-auto px-2 md:px-10 z-50 fixed top-0 bg-white/80 backdrop-blur-md border-b">
