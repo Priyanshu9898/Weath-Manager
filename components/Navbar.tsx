@@ -6,9 +6,9 @@ import { LayoutDashboard, PenBox } from "lucide-react";
 import { checkUser } from "@/lib/checkUser";
 
 const Navbar = async () => {
-  const user = await checkUser();
+  await checkUser();
 
-  console.log(user);
+  // console.log(user);
 
   return (
     <>
