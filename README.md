@@ -34,7 +34,7 @@
 - [![ESLint](https://img.shields.io/badge/ESLint-4B32C3?style=for-the-badge&logo=eslint&logoColor=white)](https://eslint.org/)
 
 ## Database Schema
-[![Wealth Manager Diagram](https://github.com/priyanshu-malaviya/wealth-manager/blob/main/assets/DatabaseSchema.png?raw=true)](https://drawsql.app/teams/priyanshu-malaviya/diagrams/wealth-manager/embed)
+[![Wealth Manager Diagram](https://github.com/Priyanshu9898/Weath-Manager/blob/main/assets/DatabaseSchema.png?raw=true)](https://drawsql.app/teams/priyanshu-malaviya/diagrams/wealth-manager/embed)
 
 
 
