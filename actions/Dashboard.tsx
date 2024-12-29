@@ -10,6 +10,8 @@ import { revalidatePath } from "next/cache";
 const serializeTransaction = (obj: any) => {
   const serialize = { ...obj };
 
+  console.log("serialize: ", serialize);
+
   if (obj.balance) {
     serialize.balance = obj.balance.toNumber();
   }
@@ -83,7 +85,7 @@ export async function createAccount(accountData: AccountDataType) {
       account: serializeAccount,
       message: "Account created successfully!!",
     };
-  } catch (error) {
-    console.error(error);
+  } catch (error: any) {
+    console.error(error?.message);
   }
 }
