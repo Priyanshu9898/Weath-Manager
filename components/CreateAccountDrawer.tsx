@@ -44,6 +44,8 @@ import { Plus } from "lucide-react";
 // import { Checkbox } from "./ui/checkbox";
 import { Switch } from "./ui/switch";
 import { HashLoader } from "react-spinners";
+import toast from "react-hot-toast";
+import { createAccount } from "@/actions/Dashboard";
 
 const CreateAccountDrawer = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -59,9 +61,35 @@ const CreateAccountDrawer = () => {
     },
   });
 
-  function onSubmit(values: z.infer<typeof CreateAccountFormSchema>) {
+  async function onSubmit(values: z.infer<typeof CreateAccountFormSchema>) {
     setIsLoading(true);
     console.log(values);
+
+    // Create account
+    try {
+      const data = await createAccount(values);
+
+      console.log(data);
+
+      if (data?.success === true) {
+        setIsLoading(false);
+        setIsOpen(false);
+        toast.success(data.message);
+      }
+
+      // Reset form
+      form.reset({
+        name: "",
+        type: "SAVINGS",
+        balance: "",
+        isDefault: false,
+      });
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to create account");
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   return (

@@ -10,7 +10,7 @@ import { revalidatePath } from "next/cache";
 const serializeTransaction = (obj: any) => {
   const serialize = { ...obj };
 
-  console.log("serialize: ", serialize);
+  //   console.log("serialize: ", serialize);
 
   if (obj.balance) {
     serialize.balance = obj.balance.toNumber();
@@ -23,7 +23,7 @@ export async function createAccount(accountData: AccountDataType) {
   try {
     const { userId } = await auth();
 
-    console.log(userId);
+    // console.log(userId);
 
     if (!userId) {
       throw new Error("Unauthorized!!");
@@ -52,9 +52,14 @@ export async function createAccount(accountData: AccountDataType) {
       },
     });
 
-    const shouldDefaultAccount = existingAccounts.length === 0 ? true : false;
+    const shouldDefaultAccount =
+      existingAccounts.length === 0
+        ? true
+        : accountData.isDefault
+        ? true
+        : false;
 
-    if (shouldDefaultAccount) {
+    if (accountData.isDefault) {
       await DB.account.updateMany({
         where: {
           userId: user.id,
