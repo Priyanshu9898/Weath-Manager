@@ -1,9 +1,21 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
 import { DB } from "@/lib/prisma";
 import { AccountDataType } from "@/types";
 
 import { auth } from "@clerk/nextjs/server";
+import { revalidatePath } from "next/cache";
+
+const serializeTransaction = (obj: any) => {
+  const serialize = { ...obj };
+
+  if (obj.balance) {
+    serialize.balance = obj.balance.toNumber();
+  }
+
+  return serialize;
+};
 
 export async function createAccount(accountData: AccountDataType) {
   try {
@@ -62,7 +74,15 @@ export async function createAccount(accountData: AccountDataType) {
       },
     });
 
-    return account;
+    const serializeAccount = serializeTransaction(account);
+
+    revalidatePath("/dashboard");
+
+    return {
+      success: true,
+      account: serializeAccount,
+      message: "Account created successfully!!",
+    };
   } catch (error) {
     console.error(error);
   }
