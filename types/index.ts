@@ -1,4 +1,8 @@
-import { AccountType } from "@prisma/client";
+import {
+  AccountType,
+  RecurringInterval,
+  TransactionType,
+} from "@prisma/client";
 
 export interface AccountDataType {
   name: string;
@@ -15,4 +19,16 @@ export interface AccountCardProps {
     balance: number;
     isDefault: boolean;
   };
+}
+
+export interface Transaction {
+  id: string;
+  type: TransactionType;
+  amount: number;
+  description: string;
+  date: Date;
+  category: string;
+  isRecurring: boolean;
+  recurringInterval?: RecurringInterval;
+  nextRecurringDate?: Date;
 }
