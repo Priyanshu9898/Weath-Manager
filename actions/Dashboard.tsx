@@ -1,40 +1,69 @@
-// "use server";
+"use server";
 
-// import { DB } from "@/lib/prisma";
-// import { auth } from "@clerk/nextjs/server";
+import { DB } from "@/lib/prisma";
+import { AccountDataType } from "@/types";
 
-// // eslint-disable-next-line @typescript-eslint/no-explicit-any
-// export async function createAccount(data: any) {
-//   try {
-//     const { userId } = await auth();
+import { auth } from "@clerk/nextjs/server";
 
-//     console.log(userId);
+export async function createAccount(accountData: AccountDataType) {
+  try {
+    const { userId } = await auth();
 
-//     if (!userId) {
-//       throw new Error("Unauthorized!!");
+    console.log(userId);
 
-//     }
+    if (!userId) {
+      throw new Error("Unauthorized!!");
+    }
 
-//     // Create account
-//     const user = await DB.user.findUnique({
-//       where: {
-//         clerkUserId: userId,
-//       },
-//     });
+    // Create account
+    const user = await DB.user.findUnique({
+      where: {
+        clerkUserId: userId,
+      },
+    });
 
-//     if (!user) {
-//       throw new Error("User not found");
-//     }
+    if (!user) {
+      throw new Error("User not found");
+    }
 
-//     const account = await DB.account.create({
-//       data: {
-//         userId: user.id,
-//       },
-//     });
+    const balanceFloat = parseFloat(accountData.balance);
 
-//     return account;
+    if (isNaN(balanceFloat)) {
+      throw new Error("Invalid balance");
+    }
 
-//   } catch (error) {
-//     console.error(error);
-//   }
-// }
+    const existingAccounts = await DB.account.findMany({
+      where: {
+        userId: user.id,
+      },
+    });
+
+    const shouldDefaultAccount = existingAccounts.length === 0 ? true : false;
+
+    if (shouldDefaultAccount) {
+      await DB.account.updateMany({
+        where: {
+          userId: user.id,
+          isDefault: true,
+        },
+        data: {
+          isDefault: false,
+        },
+      });
+    }
+
+    const account = await DB.account.create({
+      data: {
+        userId: user.id,
+        name: accountData.name,
+        type: accountData.type,
+        balance: balanceFloat,
+        isDefault: shouldDefaultAccount,
+      },
+    });
+
+    return account;
+  } catch (error) {
+    console.error(error);
+  }
+}
