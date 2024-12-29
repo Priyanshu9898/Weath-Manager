@@ -30,4 +30,4 @@ jobs:
         run: npm run lint
 
       - name: Build
-        run: prisma generate && npm run build
+        run: npx prisma generate && npm run build
