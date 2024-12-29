@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Drawer,
+  DrawerClose,
   //   DrawerClose,
   DrawerContent,
   DrawerDescription,
@@ -181,6 +182,15 @@ const CreateAccountDrawer = () => {
                   )}
                 />
 
+                <DrawerClose asChild className="mt-5 w-full">
+                  <Button
+                    type="button"
+                    // onClick={() => setIsOpen(false)}
+                    className="w-full bg-red-500 hover:bg-red-600"
+                  >
+                    Cancel
+                  </Button>
+                </DrawerClose>
                 <Button
                   type="submit"
                   className="mb-10 w-full"
@@ -192,7 +202,7 @@ const CreateAccountDrawer = () => {
                       <span className="ml-2">Creating Account...</span>
                     </>
                   ) : (
-                    "Submit"
+                    "Create Account"
                   )}
                 </Button>
               </form>
