@@ -6,3 +6,13 @@ export interface AccountDataType {
   balance: string;
   isDefault?: boolean;
 }
+
+export interface AccountCardProps {
+  account: {
+    id: string;
+    name: string;
+    type: string;
+    balance: number;
+    isDefault: boolean;
+  };
+}

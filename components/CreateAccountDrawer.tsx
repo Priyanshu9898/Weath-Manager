@@ -96,7 +96,7 @@ const CreateAccountDrawer = () => {
     <div>
       <Drawer open={isOpen} onOpenChange={setIsOpen}>
         <DrawerTrigger asChild>
-          <Card className="hover:shadow-md transition-shadow cursor-pointer border-dashed">
+          <Card className="h-full hover:shadow-md transition-shadow cursor-pointer border-dashed">
             <CardContent className="flex flex-col items-center justify-center text-muted-foreground h-full pt-5">
               <Plus className="h-10 w-10 mb-2" />
               <p className="text-sm font-medium">Add New Account</p>
