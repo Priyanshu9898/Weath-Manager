@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
 import { DB } from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
+import { revalidatePath } from "next/cache";
 
 export async function getCurrentBudget(accountId: string) {
   try {
@@ -56,6 +58,7 @@ export async function getCurrentBudget(accountId: string) {
         amount: true,
       },
     });
+
     return {
       budget: budget ? { ...budget, amount: budget.amount.toNumber() } : null,
       currentExpenses: expenses._sum.amount
@@ -64,5 +67,41 @@ export async function getCurrentBudget(accountId: string) {
     };
   } catch (error) {
     console.log(error);
+  }
+}
+
+export async function updateBudget(amount: string) {
+  try {
+    const { userId } = await auth();
+    if (!userId) throw new Error("Unauthorized");
+
+    const user = await DB.user.findUnique({
+      where: { clerkUserId: userId },
+    });
+
+    if (!user) throw new Error("User not found");
+
+    // Update or create budget
+    const budget = await DB.budget.upsert({
+      where: {
+        userId: user.id,
+      },
+      update: {
+        amount,
+      },
+      create: {
+        userId: user.id,
+        amount,
+      },
+    });
+
+    revalidatePath("/dashboard");
+    return {
+      success: true,
+      data: { ...budget, amount: budget.amount.toNumber() },
+    };
+  } catch (error: any) {
+    console.error("Error updating budget:", error);
+    return { success: false, error: error.message };
   }
 }
