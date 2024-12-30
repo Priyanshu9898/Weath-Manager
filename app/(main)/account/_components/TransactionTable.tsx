@@ -57,6 +57,7 @@ import { categoryColors } from "@/data/categories";
 import { BarLoader } from "react-spinners";
 import { useRouter } from "next/navigation";
 import { Transaction } from "@/types";
+import { BulkDeleteTransaction } from "@/actions/Account";
 
 // Constants
 const ITEMS_PER_PAGE = 10;
@@ -197,25 +198,17 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
     try {
       setDeleteLoading(true);
 
-      // Replace with your API endpoint for deleting transactions
-      const response = await fetch("/api/transactions/bulk-delete", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ ids: selectedIds }),
-      });
+      const deleteTransaction = await BulkDeleteTransaction(selectedIds);
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Failed to delete transactions.");
+      if (!deleteTransaction?.success) {
+        throw new Error("Failed to delete transactions.");
       }
 
       toast.success(
         `Deleted ${selectedIds.length} transaction(s) successfully.`
       );
       setSelectedIds([]);
-      router.refresh(); // Refresh the page to reflect changes
+      //   router.refresh(); // Refresh the page to reflect changes
     } catch (error: any) {
       console.error("Error deleting transactions:", error);
       toast.error(error.message || "Something went wrong!");

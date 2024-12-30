@@ -1,39 +1,23 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-"// app/account/[id]/page.tsx";
-
-export const dynamic = "force-dynamic";
-
 import { Suspense } from "react";
 import { BarLoader } from "react-spinners";
 import { notFound } from "next/navigation";
 import { getAccountDetails } from "@/actions/Account";
 import TransactionTable from "../_components/TransactionTable";
+import { Account } from "@/types";
 
-// Define the Account interface
-interface Account {
-  id: string;
-  name: string;
-  type: string;
-  balance: number;
-  _count: {
-    transactions: number;
-  };
-  transactions: any[];
-}
+export default async function AccountPage({ params }: { params: any }) {
+  const accountId = await params;
 
-const AccountPage = async ({ params }: { params: { id: string } }) => {
-  const parameters = await params;
-  const accountId = parameters.id;
+  const id = accountId.id;
 
-  const accountData: Account | null = await getAccountDetails(accountId);
+  const accountData: Account | null = await getAccountDetails(id);
 
   if (!accountData) {
     notFound();
   }
 
   const { transactions, ...account } = accountData;
-
-  console.log(transactions);
 
   return (
     <div className="container mx-auto py-8 px-5">
@@ -43,7 +27,7 @@ const AccountPage = async ({ params }: { params: { id: string } }) => {
             <h1 className="text-3xl sm:text-5xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-sky-500 to-blue-600 capitalize">
               {account.name}
             </h1>
-            <p className="text-muted-foreground ">
+            <p className="text-muted-foreground">
               {account.type.charAt(0) + account.type.slice(1).toLowerCase()}{" "}
               Account
             </p>
@@ -79,6 +63,4 @@ const AccountPage = async ({ params }: { params: { id: string } }) => {
       </div>
     </div>
   );
-};
-
-export default AccountPage;
+}

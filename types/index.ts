@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   AccountType,
   RecurringInterval,
@@ -31,4 +32,15 @@ export interface Transaction {
   isRecurring: boolean;
   recurringInterval?: RecurringInterval;
   nextRecurringDate?: Date;
+}
+
+export interface Account {
+  id: string;
+  name: string;
+  type: string;
+  balance: number;
+  _count: {
+    transactions: number;
+  };
+  transactions: any[];
 }
